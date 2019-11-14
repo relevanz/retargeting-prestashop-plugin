@@ -1,0 +1,11 @@
+{
+  "name": "releva/relevanz",
+  "description": "releva.nz - Technology for personalized marketing",
+  "autoload": {
+    "psr-4": {
+      "Relevanz\\Controllers\\": "controllers/",
+      "RelevanzTracking\\": "src/"
+    }
+  },
+  "type": "prestashop-module"
+}

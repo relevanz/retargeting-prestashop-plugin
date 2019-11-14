@@ -1,0 +1,35 @@
+.adminrelevanzconf .help-box {
+    display: inline-block;
+    box-sizing: border-box;
+    color: #25b9d7;
+    background-color: #dff5f9;
+    height: 16px;
+    height: 1rem;
+    width: 16px;
+    width: 1rem;
+    font-weight: 700;
+    font-size: 10px;
+    line-height: 12px;
+    vertical-align: middle;
+    text-align: center;
+    border: 2px solid #25b9d7;
+    cursor: pointer;
+    padding: 0;
+    margin: 0 5px 2px;
+}
+.adminrelevanzconf .help-box::after {
+    content: "?";
+}
+.adminrelevanzconf .popover {
+    width: 100%;
+}
+.adminrelevanzconf .bootstrap input[readonly]:focus {
+    background-color: #eee;
+}
+.adminrelevanzconf .panel-heading [class*='rzicon-']:before {
+    vertical-align: -13%;
+    font-size: 120%;
+}
+.adminrelevanzconf #main {
+    padding-bottom: 0;
+}

@@ -1,0 +1,54 @@
+body.adminrelevanzstats div#main.has-stats-frame,
+body.adminrelevanzstats div#main.has-stats-frame div#content {
+    position: relative;
+    bottom: 0;
+    height: 100%;
+    box-sizing: border-box;
+}
+body.adminrelevanzstats div#main.has-stats-frame {
+    padding-bottom: 0px;
+    ba-ckground: #363a41;
+}
+body.adminrelevanzstats div#main.has-stats-frame div#content {
+    padding: 104px 0 0 210px;
+}
+body.adminrelevanzstats.page-sidebar-closed:not(.mobile) div#main.has-stats-frame #content {
+    padding-left: 3.14rem;
+}
+body.adminrelevanzstats.mobile div#main.has-stats-frame #content.bootstrap {
+    padding: 124px 0 0 0;
+}
+#relevanz-stats-wrapper {
+	height: 100%;
+}
+#relevanz-stats {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#relevanz-stats iframe {
+	flex-grow: 1;
+	border: none;
+}
+#relevanz-stats iframe.loading {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100px' height='100px' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' fill='none' stroke-linecap='round' r='33' stroke-width='2' stroke='%23000000' stroke-dasharray='33 33' transform='rotate(360 0 0)'%3E%3CanimateTransform attributeName='transform' type='rotate' calcMode='linear' values='0 50 50;360 50 50' keyTimes='0;1' dur='2s' begin='0s' repeatCount='indefinite'%3E%3C/animateTransform%3E%3C/circle%3E%3Ccircle cx='50' cy='50' fill='none' stroke-linecap='round' r='30' stroke-width='2' stroke='%23E30613' stroke-dasharray='30 30' stroke-dashoffset='30' transform='rotate(-360 0 0)'%3E%3CanimateTransform attributeName='transform' type='rotate' calcMode='linear' values='0 50 50;-360 50 50' keyTimes='0;1' dur='2s' begin='0s' repeatCount='indefinite'%3E%3C/animateTransform%3E%3C/circle%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+}
+body.adminrelevanzstats div#main.has-stats-frame #msg_wrong_shop_context {
+	border-radius: 0;
+	margin-bottom: 0;
+}
+
+/* fixes for PS versions != 1.7 */
+body.ps_v_1_6.adminrelevanzstats div#main.has-stats-frame div#content {
+    padding-left: 0;
+}
+body.ps_v_1_6.adminrelevanzstats.page-sidebar-closed:not(.mobile) div#main.has-stats-frame #content {
+    padding-left: 0px;
+    margin-left: 50px;
+}

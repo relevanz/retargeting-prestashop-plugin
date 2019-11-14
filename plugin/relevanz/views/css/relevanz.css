@@ -1,0 +1,106 @@
+@font-face {
+    font-family: 'relevanz';
+    src: url('../fonts/relevanz/relevanz.eot');
+    src: url('../fonts/relevanz/relevanz.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/relevanz/relevanz.woff') format('woff'),
+         url('../fonts/relevanz/relevanz.ttf') format('truetype'),
+         url('../fonts/relevanz/relevanz.svg#relevanz') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+[class*='rzicon-']:before {
+    display: inline-block;
+    font-family: 'relevanz';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.rzicon-relevanz:before{content:'\0041';}
+.rzicon-statistics:before{content:'\0042';}
+.rzicon-settings:before{content:'\0043';}
+.rzicon-configuration:before{content:'\0044';}
+
+
+/* Remove bottom padding from PrestaShop menu and Add bottom padding to module menu */
+.main-menu {
+    padding-bottom: 0 !important;
+}
+.main-menu:last-of-type {
+    padding-bottom: 5.313rem !important
+}
+/* Fix menu icon size */
+.nav-bar .main-menu.relevanz-menu li[class*='link-level'] [class*='rzicon-'] {
+    height: 1rem;
+    font-size: 1rem;
+}
+
+/* Old style nav */
+#subtab-AdminRelevanzStats .link:before {
+    font-family: 'relevanz';
+    font-size: 1.2rem;
+    content:'\0042';
+    color: #fff;
+}
+#subtab-AdminRelevanzStats .link .material-icons {
+    display: none;
+}
+#subtab-AdminRelevanzConf .link:before {
+    font-family: 'relevanz';
+    font-size: 1.2rem;
+    content:'\0044';
+    color: #fff;
+}
+#subtab-AdminRelevanzConf .link .material-icons {
+    display: none;
+}
+
+/* Prestashop 1.6 */
+li#maintab-AdminRelevanzMain .icon-AdminRelevanzMain {
+	font-family: 'relevanz';
+	
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+li#maintab-AdminRelevanzMain .icon-AdminRelevanzMain::before {
+	content:'\0041';
+	vertical-align: middle;
+}
+
+#msg_wrong_shop_context {
+	border: 1px solid #359ddb;
+	border-left-width: 4px;
+	border-radius: 3px;
+	margin-bottom: 17px;
+	padding: 15px;
+	padding-left: 50px;
+	background-color: #dcf4f9;
+	color: #0070b3;
+	position: relative;
+}
+#msg_wrong_shop_context::before {
+    position: absolute;
+    left: 7px;
+    top: 6px;
+    background: #359ddb;
+    border-radius: 200px;
+    width: 35px;
+    height: 35px;
+    content: "!";
+    color: #dcf4f9;
+    font-weight: bolder;
+    font-size: 25px;
+    text-align: center;
+    line-height: 35px;
+}
+#msg_wrong_shop_context strong {
+	color: #005080;
+	font-weight: bolder;
+}
+#msg_wrong_shop_context strong::before {
+	content: "\"";
+}
+#msg_wrong_shop_context strong::after {
+	content: "\"";
+}
