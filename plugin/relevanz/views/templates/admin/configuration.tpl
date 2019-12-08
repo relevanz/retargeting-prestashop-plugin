@@ -1,5 +1,5 @@
 {if (!empty($msg_wrong_shop_context))}<div id="msg_wrong_shop_context">{$msg_wrong_shop_context|replace:['[',']']:['<strong>', '</strong>']}</div>{/if}
-<form action="{$link->getAdminLink($smarty.get.controller)|escape:'html':'UTF-8'}" method="post" enctype="multipart/form-data" class="form-horizontal">
+<form action="{$link->getAdminLink($controller_name)|escape:'html':'UTF-8'}" method="post" enctype="multipart/form-data" class="form-horizontal">
     <div class="panel">
         <div class="panel-heading"><i class="rzicon-configuration"></i> {l s='General' d='Admin.Global'}</div>
         <div class="form-wrapper">
@@ -10,7 +10,7 @@
                     {l s='Your releva.nz API Key' mod='relevanz'}
                     <span class="help-box" data-toggle="popover" data-html="true" data-content="{$helpBox|replace:'"':'&quot;'}"></span>
                 </label>
-                <p class="sr-only">{$helpBox|unescape:"htmlall"}</p>
+                <p class="sr-only">{$helpBox|unescape:"html" nofilter}</p>
                 <div class="col-lg-9">
                     <input type="text" id="conf_apikey" name="relevanz[conf][apikey]" class="form-control" value="{$credentials->getApiKey()}">
                 </div>
@@ -28,7 +28,7 @@
                         {l s='Export-URL' mod='relevanz'}
                         <span class="help-box" data-toggle="popover" data-html="true" data-content="{$helpBox|replace:'"':'&quot;'}"></span>
                     </label>
-                    <p class="sr-only">{$helpBox|unescape:"htmlall"}</p>
+                    <p class="sr-only">{$helpBox|unescape:"html" nofilter}</p>
                     <div class="col-lg-9">
                         <input type="text" id="conf_export_url" class="form-control" value="{$exportUrl}" readonly>
                     </div>

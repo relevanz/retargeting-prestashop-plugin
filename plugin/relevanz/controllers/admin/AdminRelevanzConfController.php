@@ -5,16 +5,17 @@ Released under the MIT License (Expat)
 [https://opensource.org/licenses/MIT]
 --------------------------------------------------------------
 */
-require_once(__DIR__.'/../../vendor/autoload.php');
+require_once(__DIR__.'/../../autoload.php');
 
-use RelevanzTracking\Lib\RelevanzApi;
-use RelevanzTracking\Lib\Credentials;
-use RelevanzTracking\Lib\RelevanzException;
-use RelevanzTracking\PrestashopAdminBaseController;
-use RelevanzTracking\PrestashopConfiguration;
-use RelevanzTracking\PrestashopHelper;
+use Releva\Retargeting\Base\RelevanzApi;
+use Releva\Retargeting\Base\Credentials;
+use Releva\Retargeting\Base\Exception\RelevanzException;
+use Releva\Retargeting\Prestashop\PrestashopConfiguration;
+use Releva\Retargeting\Prestashop\PrestashopShopInfo;
+use Releva\Retargeting\Prestashop\PrestashopHelper;
+use Releva\Retargeting\Prestashop\AdminBaseController;
 
-class AdminRelevanzConfController extends PrestashopAdminBaseController
+class AdminRelevanzConfController extends AdminBaseController
 {
     public function __construct() {
 
@@ -52,7 +53,7 @@ class AdminRelevanzConfController extends PrestashopAdminBaseController
         try {
             $credentials = RelevanzApi::verifyApiKey(
                 isset($post['conf']['apikey']) ? $post['conf']['apikey'] : '',
-                ['callback-url' => PrestashopConfiguration::getUrlExport()]
+                ['callback-url' => PrestashopShopInfo::getUrlCallback()]
             );
             PrestashopConfiguration::updateCredentials($credentials);
 
@@ -68,7 +69,7 @@ class AdminRelevanzConfController extends PrestashopAdminBaseController
     public function renderView() {
         $this->saveAction();
         $credentials = PrestashopConfiguration::getCredentials();
-        $exportUrl = str_replace(':auth', $credentials->getAuthHash(), PrestashopConfiguration::getUrlExport());
+        $exportUrl = str_replace(':auth', $credentials->getAuthHash(), PrestashopShopInfo::getUrlProductExport());
 
         if (PrestashopConfiguration::conflictsMultistore()) {
             $this->errors[] = $this->l('One or more API keys are used by different multistore instances. This can lead to unwanted behavior. Please make sure that each shop uses its own API key. If you need more API keys, please contact the releva.nz support.');

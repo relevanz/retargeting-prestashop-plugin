@@ -30,7 +30,8 @@ class Relevanz extends Module {
         #$this->module_key = '0123456789abcdef0123456789abcdef';
         $this->author = 'Releva GmbH';
         $this->tab = 'advertising_marketing';
-        $this->ps_versions_compliancy = ['min' => '1.6', 'max' => _PS_VERSION_];
+        // The version compliancy check in prestashop 1.5 is kinda broken.
+        $this->ps_versions_compliancy = ['min' => '1.5.1', 'max' => _PS_VERSION_.'.9'];
         $this->version = '1.0.0';
         // Indicates that the module’s template files have been built with PrestaShop 1.6’s
         // bootstrap tools in mind – and therefore, that PrestaShop should not try to wrap the

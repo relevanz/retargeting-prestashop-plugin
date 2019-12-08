@@ -13,7 +13,9 @@ $_MODULE['<{relevanz}prestashop>adminrelevanzconfcontroller_d090da4a2419540476ff
 $_MODULE['<{relevanz}prestashop>adminrelevanzconfcontroller_9749199409ed74942fea0f97aed18b58'] = 'La clé API ne peut pas être vérifiée. Veuillez vous assurer que la clé API est correcte.';
 $_MODULE['<{relevanz}prestashop>adminrelevanzconfcontroller_e7b0872bb358695e9f1d473849a45b0d'] = 'La clé API ne peut pas être vérifiée. Veuillez vous assurer que la clé API est correcte.';
 $_MODULE['<{relevanz}prestashop>adminrelevanzconfcontroller_558b49eb972c3c62a1a4e5b6d91420ae'] = 'Configuration sauvegardée.';
+$_MODULE['<{relevanz}prestashop>adminrelevanzconfcontroller_7a6c14e10f0670f5215b49b31c6d0443'] = 'Une ou plusieurs clés API sont utilisées par différentes instances multiboutiques. Cela peut entraîner un comportement indésirable. Veuillez vous assurer que chaque boutique utilise sa propre clé API. Si vous avez besoin de clés API supplémentaires, veuillez contacter le support releva.nz.';
 $_MODULE['<{relevanz}prestashop>adminrelevanzstatscontroller_c33e404a441c6ba9648f88af3c68a1ca'] = 'Statistique';
+$_MODULE['<{relevanz}prestashop>adminbasecontroller_3331e78f651d3451c222f533a9e9abb6'] = 'Le plugin releva.nz ne peut être configuré que pour des boutiques spécifiques. Veuillez changer le contexte d\'une boutique en particulier. Actuellement, la boutique [%s] est utilisée.';
 $_MODULE['<{relevanz}prestashop>configuration_1949b60c8576d9ab0d3db0c57b743d96'] = 'Si vous êtes déjà enregistré et avez reçu notre clé, veuillez l\'entrer dans ce champ.[br][plink]Vous n\'êtes pas encore inscrit? Attrapez-le maintenant![/plink]';
 $_MODULE['<{relevanz}prestashop>configuration_2b3433dd650bb461a55cbc0dd52d2f7c'] = 'Votre clé API releva.nz';
 $_MODULE['<{relevanz}prestashop>configuration_98bbe02b1bc66f5988cd9e997ea80e3b'] = 'Votre identifiant client';

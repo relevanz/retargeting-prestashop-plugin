@@ -5,51 +5,15 @@ Released under the MIT License (Expat)
 [https://opensource.org/licenses/MIT]
 --------------------------------------------------------------
 */
-require_once(__DIR__.'/../../vendor/autoload.php');
+require_once(__DIR__.'/../../autoload.php');
 
-use RelevanzTracking\Lib\Credentials;
-use RelevanzTracking\Lib\RelevanzException;
-use RelevanzTracking\Lib\HttpResponse;
-use RelevanzTracking\PrestashopConfiguration;
+use Releva\Retargeting\Base\HttpResponse;
+use Releva\Retargeting\Prestashop\PrestashopConfiguration;
+use Releva\Retargeting\Prestashop\PrestashopShopInfo;
+use Releva\Retargeting\Prestashop\FrontBaseController;
 
-class RelevanzCallbackModuleFrontController extends ModuleFrontController
+class RelevanzCallbackModuleFrontController extends FrontBaseController
 {
-    protected function verifyRequest() {
-        $credentials = PrestashopConfiguration::getCredentials();
-        if (!$credentials->isComplete()) {
-            return new HttpResponse('releva.nz module is not configured', [
-                'HTTP/1.0 403 Forbidden',
-                'Content-Type: text/plain; charset="utf-8"',
-                'Cache-Control: must-revalidate',
-            ]);
-        }
-
-        if (Tools::getValue('auth') !== $credentials->getAuthHash()) {
-            return new HttpResponse('Missing authentification', [
-                'HTTP/1.0 401 Unauthorized',
-                'Content-Type: text/plain; charset="utf-8"',
-                'Cache-Control: must-revalidate',
-            ]);
-        }
-        return null;
-    }
-
-    protected function getDbStats() {
-        $r = [];
-        try {
-            $data = Db::getInstance()->getRow('SELECT @@version, @@version_comment');
-        } catch (\Exception $e) {
-            $data = null;
-        }
-        if (isset($data['@@version_comment'])) {
-            $r['server'] = $data['@@version_comment'];
-        }
-        if (isset($data['@@version'])) {
-            $r['version'] = $data['@@version'];
-        }
-        return empty($r) ? null : $r;
-    }
-
     protected function discoverCallbacks() {
         $callbacks = [];
         $dir = new DirectoryIterator(__DIR__);
@@ -76,35 +40,23 @@ class RelevanzCallbackModuleFrontController extends ModuleFrontController
         return $callbacks;
     }
 
-    public function display() {
-        $herp = $this->verifyRequest();
-        if ($herp !== null) {
-            $herp->out();
-            return;
-        }
+    protected function action() {
         $data = [
             'plugin-version' => PrestashopConfiguration::getPluginVersion(),
             'shop' => [
-                'system' => 'prestashop',
-                'version' => _PS_VERSION_,
+                'system' => PrestashopShopInfo::getShopSystem(),
+                'version' => PrestashopShopInfo::getShopVersion(),
+                'is-multishop' => Shop::isFeatureActive(),
+                'shop-name' => $this->context->shop->name,
             ],
-            'environment' => [
-                'server-software' => isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : null,
-                'php' => [
-                    'version' => phpversion(),
-                    'sapi-name' => php_sapi_name(),
-                    'memory-limit' => ini_get('memory_limit'),
-                    'max-execution-time' => ini_get('max_execution_time'),
-                ],
-                'db' => $this->getDbStats(),
-            ],
+            'environment' => PrestashopShopInfo::getServerEnvironment(),
             'callbacks' => $this->discoverCallbacks()
         ];
         $r = new HttpResponse(json_encode($data, JSON_PRETTY_PRINT | JSON_PRESERVE_ZERO_FRACTION), [
             'Content-Type: application/json; charset="utf-8"',
             'Cache-Control: must-revalidate',
         ]);
-        $r->out();
+        return $r;
     }
 
 }

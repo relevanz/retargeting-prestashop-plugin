@@ -1,36 +1,24 @@
 <?php
 /* -----------------------------------------------------------
 Copyright (c) 2019 Releva GmbH - https://www.releva.nz
-Released under the GNU General Public License (Version 2)
-[http://www.gnu.org/licenses/gpl-2.0.html]
+Released under the MIT License (Expat)
+[https://opensource.org/licenses/MIT]
 --------------------------------------------------------------
 */
-namespace RelevanzTracking;
+namespace Releva\Retargeting\Prestashop;
 
 use Context;
 use Configuration;
 use Shop;
-use RelevanzTracking\Lib\Credentials;
 
-class PrestashopConfiguration implements Lib\Configuration
+use Releva\Retargeting\Base\ConfigurationInterface;
+use Releva\Retargeting\Base\Credentials;
+
+class PrestashopConfiguration implements ConfigurationInterface
 {
-    const PLUGIN_VERSION = '1.0.0';
+    const PLUGIN_VERSION = '1.1.0';
     const CONF_APIKEY = 'RELEVANZ_APIKEY';
     const CONF_USERID = 'RELEVANZ_USERID';
-
-    public static function getUrlCallback() {
-        return str_replace(
-            '_auth', ':auth',
-            Context::getContext()->link->getModuleLink('relevanz', 'callback', ['auth' => '_auth'])
-        );
-    }
-
-    public static function getUrlExport() {
-        return str_replace(
-            '_auth', ':auth',
-            Context::getContext()->link->getModuleLink('relevanz', 'export', ['auth' => '_auth'])
-        );
-    }
 
     public static function getCredentials() {
         $shopId = Context::getContext()->shop->id;
@@ -52,19 +40,19 @@ class PrestashopConfiguration implements Lib\Configuration
         return self::PLUGIN_VERSION;
     }
 
-	public static function conflictsMultistore() {
-		if (!Shop::isFeatureActive()) {
-			return false;
-		}
-		$multiconf = Configuration::getMultiShopValues(self::CONF_APIKEY);
-		$conflictTable = [];
-		foreach ($multiconf as $shopId => $value) {
-			if (isset($conflictTable[$value])) {
-				return true;
-			}
-			$conflictTable[$value] = true;
-		}
-		return false;
-	}
-	
+    public static function conflictsMultistore() {
+        if (!Shop::isFeatureActive()) {
+            return false;
+        }
+        $multiconf = Configuration::getMultiShopValues(self::CONF_APIKEY);
+        $conflictTable = [];
+        foreach ($multiconf as $shopId => $value) {
+            if (isset($conflictTable[$value])) {
+                return true;
+            }
+            $conflictTable[$value] = true;
+        }
+        return false;
+    }
+
 }

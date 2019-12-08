@@ -7,9 +7,10 @@ Released under the MIT License (Expat)
 */
 namespace RelevanzTracking\Hook;
 
-require_once(__DIR__.'/../../vendor/autoload.php');
+require_once(__DIR__.'/../../autoload.php');
 
 use Exception;
+use ReflectionClass;
 
 use Context;
 use Media;
@@ -20,10 +21,10 @@ use CategoryController;
 use ProductController;
 use OrderConfirmationController;
 
-use RelevanzTracking\Lib\RelevanzApi;
-use RelevanzTracking\Lib\Credentials;
-use RelevanzTracking\Lib\RelevanzException;
-use RelevanzTracking\PrestashopConfiguration;
+use Releva\Retargeting\Base\RelevanzApi;
+use Releva\Retargeting\Base\Credentials;
+use Releva\Retargeting\Base\Exception\RelevanzException;
+use Releva\Retargeting\Prestashop\PrestashopConfiguration;
 
 class TrackingHook
 {
@@ -35,6 +36,22 @@ class TrackingHook
         $this->context = $context;
         $this->moduleName = $moduleName;
         $this->credentials = PrestashopConfiguration::getCredentials();
+    }
+
+    protected function accessControllerObject($method, $property) {
+        $getCall = [$this->context->controller, $method];
+        if (is_callable($getCall)) {
+            // Sane 1.6+
+            return call_user_func($getCall);
+        }
+        // Insane Prestashop 1.5
+        $class = new ReflectionClass(get_class($this->context->controller));
+        if (!$class->hasProperty($property)) {
+            return null;
+        }
+        $rp = $class->getProperty($property);
+        $rp->setAccessible(true);
+        return $rp->getValue($this->context->controller);
     }
 
     protected function buildTrackerIndex($params) {
@@ -50,9 +67,8 @@ class TrackingHook
         if (!($this->context->controller instanceof CategoryController)) {
             return [];
         }
-        $id = isset($this->context->controller->getCategory()->id)
-            ? (int)$this->context->controller->getCategory()->id
-            : 0;
+        $category = $this->accessControllerObject('getCategory', 'category');
+        $id = isset($category->id) ? (int)$category->id : 0;
         if (!($id > 0)) {
             return [];
         }
@@ -69,9 +85,8 @@ class TrackingHook
         if (!($this->context->controller instanceof ProductController)) {
             return [];
         }
-        $id = isset($this->context->controller->getProduct()->id)
-            ? (int)$this->context->controller->getProduct()->id
-            : 0;
+        $product = $this->accessControllerObject('getProduct', 'product');
+        $id = isset($product->id) ? (int)$product->id : 0;
         if (!($id > 0)) {
             return [];
         }
@@ -109,9 +124,8 @@ class TrackingHook
                 'products' => null,
             ],
         ];
-
         $pIds = [];
-        foreach ($order->getCartProducts() as $p) {
+        foreach ($order->getProducts() as $p) {
             if (!isset($p['product_id']) || !((int)$p['product_id'] > 0)) {
                 continue;
             }
@@ -127,17 +141,25 @@ class TrackingHook
         if (empty($tr)) {
             return;
         }
+
+        if (!is_callable('Media::addJsDef')) {
+            // prestashop v1.5
+            $this->context->controller->js_files[] = htmlentities($tr['script']);
+            return;
+        }
+
         Media::addJsDef([
-            'relevanz_tr' => $tr,
+            'relevanz_px' => $tr['script'],
         ]);
+
         if (is_callable([$this->context->controller, 'registerJavascript'])) {
-            // v1.7
+            // prestashop v1.7
             $this->context->controller->registerJavascript(
                 'relevanz-front-js',
                 'modules/' . $this->moduleName . '/views/js/front.js'
             );
         } else if (is_callable([$this->context->controller, 'addJS'])) {
-            // v1.6, maybe older
+            // prestashop v1.6
             $this->context->controller->addJs(_MODULE_DIR_.$this->moduleName.'/views/js/front.js');
         }
     }
@@ -146,24 +168,8 @@ class TrackingHook
         if (!$this->credentials->isComplete()) {
             return;
         }
-        /*
-        if (is_callable([$this->context->controller, 'getPageName'])) {
-            $pageName = $this->context->controller->getPageName();
-        } else {
-            // extract page name from smarty variables for older versions of prestashop
-            $pageName = $this->context->smarty->getTemplateVars('page_name');
-        }
 
-        $pageName = str_replace(' ', '', ucwords(
-            str_replace(['-', '_'], ' ', $pageName)
-        ));
-        */
         $pageName = str_replace('Controller', '', get_class($this->context->controller));
-        /*
-        if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || (strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest')) {
-            var_dump($pageName);
-        }
-        //*/
 
         $cb = [$this, 'buildTracker'.$pageName];
         if (!is_callable($cb)) {
@@ -180,8 +186,10 @@ class TrackingHook
             return;
         }
 
+        $tr['script'] = $tr['url'];
         if (isset($tr['params'])) {
             $tr['params'] = http_build_query($tr['params']);
+            $tr['script'] .= '?'.$tr['params'];
         }
 
         $this->registerJs($tr);

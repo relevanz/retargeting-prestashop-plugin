@@ -5,13 +5,13 @@ Released under the MIT License (Expat)
 [https://opensource.org/licenses/MIT]
 --------------------------------------------------------------
 */
-namespace RelevanzTracking;
+namespace Releva\Retargeting\Prestashop;
 
 use ModuleAdminController;
 use Shop;
 use Translate;
 
-class PrestashopAdminBaseController extends ModuleAdminController
+class AdminBaseController extends ModuleAdminController
 {
 
     public function initToolbarFlags() {
@@ -30,12 +30,13 @@ class PrestashopAdminBaseController extends ModuleAdminController
                 )
             ]);
         }
+        $this->context->smarty->assign(['controller_name' => $this->controller_name]);
         parent::initContent();
     }
 
     public function createTemplate($tplName) {
         $ds = DIRECTORY_SEPARATOR;
-        $tplName = __DIR__.$ds.'..'.$ds.'views'.$ds.'templates'.$ds.'admin'.$ds.$tplName;
+        $tplName = __DIR__.$ds.'..'.$ds.'..'.$ds.'views'.$ds.'templates'.$ds.'admin'.$ds.$tplName;
         return $this->context->smarty->createTemplate($tplName, $this->context->smarty);
     }
 

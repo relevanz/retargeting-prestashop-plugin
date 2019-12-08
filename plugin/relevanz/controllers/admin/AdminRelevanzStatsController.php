@@ -5,15 +5,15 @@ Released under the MIT License (Expat)
 [https://opensource.org/licenses/MIT]
 --------------------------------------------------------------
 */
-require_once(__DIR__.'/../../vendor/autoload.php');
+require_once(__DIR__.'/../../autoload.php');
 
-use RelevanzTracking\Lib\RelevanzApi;
-use RelevanzTracking\Lib\Credentials;
-use RelevanzTracking\Lib\RelevanzException;
-use RelevanzTracking\PrestashopAdminBaseController;
-use RelevanzTracking\PrestashopConfiguration;
+use Releva\Retargeting\Base\RelevanzApi;
+use Releva\Retargeting\Base\Credentials;
+use Releva\Retargeting\Base\Exception\RelevanzException;
+use Releva\Retargeting\Prestashop\PrestashopConfiguration;
+use Releva\Retargeting\Prestashop\AdminBaseController;
 
-class AdminRelevanzStatsController extends PrestashopAdminBaseController
+class AdminRelevanzStatsController extends AdminBaseController
 {
     public function __construct()
     {
@@ -26,6 +26,9 @@ class AdminRelevanzStatsController extends PrestashopAdminBaseController
     }
 
     public function setMedia($isNewTheme = false) {
+        if (!$isNewTheme) {
+            $this->addJs(_MODULE_DIR_.$this->module->name.'/views/js/old-theme-helper.js');
+        }
         $this->addCss(_MODULE_DIR_.$this->module->name.'/views/css/statistics.css');
         $this->addJs(_MODULE_DIR_.$this->module->name.'/views/js/statistics.js');
         parent::setMedia($isNewTheme);

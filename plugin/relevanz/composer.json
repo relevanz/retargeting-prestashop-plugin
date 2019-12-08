@@ -1,11 +1,32 @@
 {
-  "name": "releva/relevanz",
-  "description": "releva.nz - Technology for personalized marketing",
-  "autoload": {
-    "psr-4": {
-      "Relevanz\\Controllers\\": "controllers/",
-      "RelevanzTracking\\": "src/"
+    "name": "releva/relevanz-prestashop-plugin",
+    "description": "releva.nz - Technology for personalized marketing",
+    "type": "prestashop-module",
+    "config": {
+        "vendor-dir": "lib"
+    },
+    "require": {
+        "releva/retargeting-base": "dev-master"
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/jenslukas/relevanz-core-plugin.git"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Releva\\Retargeting\\Prestashop\\": "lib/prestashop/"
+        }
+    },
+    "scripts": {
+        "post-update-cmd": [
+            "rm composer.lock",
+            "rm lib/autoload.php",
+            "rm -r lib/composer",
+            "mv lib/releva/retargeting-base/lib/* lib/releva/retargeting-base/",
+            "rm -r lib/releva/retargeting-base/{lib,composer.json,LICENSE,README.md}",
+            "rm -r lib/releva/retargeting-base/.git* ||:"
+        ]
     }
-  },
-  "type": "prestashop-module"
 }

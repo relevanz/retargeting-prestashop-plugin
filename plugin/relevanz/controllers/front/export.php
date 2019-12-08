@@ -5,40 +5,21 @@ Released under the MIT License (Expat)
 [https://opensource.org/licenses/MIT]
 --------------------------------------------------------------
 */
-require_once(__DIR__.'/../../vendor/autoload.php');
+require_once(__DIR__.'/../../autoload.php');
 
-use RelevanzTracking\Lib\Credentials;
-use RelevanzTracking\Lib\RelevanzException;
-use RelevanzTracking\Lib\CSVExporter;
-use RelevanzTracking\Lib\JsonExporter;
-use RelevanzTracking\Lib\HttpResponse;
-use RelevanzTracking\PrestashopConfiguration;
+use Releva\Retargeting\Base\Export\Item\ProductExportItem;
+use Releva\Retargeting\Base\Export\ProductCsvExporter;
+use Releva\Retargeting\Base\Export\ProductJsonExporter;
+use Releva\Retargeting\Base\HttpResponse;
+use Releva\Retargeting\Prestashop\PrestashopConfiguration;
+use Releva\Retargeting\Prestashop\PrestashopShopInfo;
+use Releva\Retargeting\Prestashop\FrontBaseController;
 
-class RelevanzExportModuleFrontController extends ModuleFrontController
+class RelevanzExportModuleFrontController extends FrontBaseController
 {
-    const ITEMS_PER_PAGE = 2000;
+    const ITEMS_PER_PAGE = 1500;
 
-    protected function verifyRequest() {
-        $credentials = PrestashopConfiguration::getCredentials();
-        if (!$credentials->isComplete()) {
-            return new HttpResponse('releva.nz module is not configured', [
-                'HTTP/1.0 403 Forbidden',
-                'Content-Type: text/plain; charset="utf-8"',
-                'Cache-Control: must-revalidate',
-            ]);
-        }
-
-        if (Tools::getValue('auth') !== $credentials->getAuthHash()) {
-            return new HttpResponse('Missing authentification', [
-                'HTTP/1.0 401 Unauthorized',
-                'Content-Type: text/plain; charset="utf-8"',
-                'Cache-Control: must-revalidate',
-            ]);
-        }
-        return null;
-    }
-
-    protected function exportProducts() {
+    protected function action() {
         $shopId = (int)$this->context->shop->id;
         $langId = (int)$this->context->language->id;
 
@@ -54,13 +35,13 @@ class RelevanzExportModuleFrontController extends ModuleFrontController
         }
 
         $exporter = null;
-        switch (Tools::getValue('type')) {
+        switch (Tools::getValue('format')) {
             case 'json': {
-                $exporter = new JsonExporter();
+                $exporter = new ProductJsonExporter();
                 break;
             }
             default: {
-                $exporter = new CSVExporter();
+                $exporter = new ProductCsvExporter();
                 break;
             }
         }
@@ -93,45 +74,35 @@ class RelevanzExportModuleFrontController extends ModuleFrontController
                 $productImage = $this->context->link->getImageLink($product->link_rewrite, $p['id'].'-'.$coverImageId);
             }
 
-            $exporter->addRow([
-                'product_id' => (int)$p['id'],
-                'category_ids' => Product::getProductCategories($p['id']),
-                'product_name' => $product->name,
-                'short_description' => $product->description_short,
-                'long_description' => $product->description,
-                'price' => $product->price,
-                'link' => $product->getLink($this->context),
-                'image' => $productImage,
-            ]);
+            $exporter->addItem(new ProductExportItem(
+                (int)$p['id'],
+                Product::getProductCategories($p['id']),
+                $product->name,
+                $product->description_short,
+                $product->description,
+                $product->price,
+                $product->getLink($this->context),
+                $productImage
+            ));
         }
 
-        return new HttpResponse(
-            $exporter->getContents(),
-            array_merge(
-                $exporter->getHttpHeaders(),
-                [
-                    'Cache-Control: must-revalidate',
-                    'X-Relevanz-Product-Count: '.$pCount,
-                    'Content-Type: text/plain; charset="utf-8"', 'Content-Disposition: inline',
-                ]
-            )
-        );
-    }
 
-    public function display() {
-        $herp = $this->verifyRequest();
-        if ($herp !== null) {
-            $herp->out();
-            return;
+        $headers = [];
+        foreach ($exporter->getHttpHeaders() as $hkey => $hval) {
+            $headers[] = $hkey.': '.$hval;
         }
-        $this->exportProducts()->out();
+        $headers[] = 'Cache-Control: must-revalidate';
+        $headers[] = 'X-Relevanz-Product-Count: '.$pCount;
+        #$headers[] = 'Content-Type: text/plain; charset="utf-8"', 'Content-Disposition: inline';
+
+        return new HttpResponse($exporter->getContents(), $headers);
     }
 
     public static function discover() {
         return [
-            'url' => PrestashopConfiguration::getUrlExport(),
+            'url' => PrestashopShopInfo::getUrlProductExport(),
             'parameters' => [
-                'type' => [
+                'format' => [
                     'values' => ['csv', 'json'],
                     'default' => 'csv',
                     'optional' => true,
