@@ -74,13 +74,17 @@ class RelevanzExportModuleFrontController extends FrontBaseController
                 $productImage = $this->context->link->getImageLink($product->link_rewrite, $p['id'].'-'.$coverImageId);
             }
 
+            $price = $product->getPublicPrice(true, null, 2, null, false, false);
+            $priceOffer = $product->getPublicPrice(true, null, 2);
+
             $exporter->addItem(new ProductExportItem(
                 (int)$p['id'],
                 Product::getProductCategories($p['id']),
                 $product->name,
                 $product->description_short,
                 $product->description,
-                $product->price,
+                $price,
+                $priceOffer,
                 $product->getLink($this->context),
                 $productImage
             ));
@@ -93,7 +97,7 @@ class RelevanzExportModuleFrontController extends FrontBaseController
         }
         $headers[] = 'Cache-Control: must-revalidate';
         $headers[] = 'X-Relevanz-Product-Count: '.$pCount;
-        #$headers[] = 'Content-Type: text/plain; charset="utf-8"', 'Content-Disposition: inline';
+        #$headers[] = 'Content-Type: text/plain; charset="utf-8"'; $headers[] = 'Content-Disposition: inline';
 
         return new HttpResponse($exporter->getContents(), $headers);
     }
