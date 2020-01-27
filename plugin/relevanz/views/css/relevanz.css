@@ -58,26 +58,26 @@
 
 /* Prestashop 1.6 */
 li#maintab-AdminRelevanzMain .icon-AdminRelevanzMain {
-	font-family: 'relevanz';
-	
+    font-family: 'relevanz';
+
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 li#maintab-AdminRelevanzMain .icon-AdminRelevanzMain::before {
-	content:'\0041';
-	vertical-align: middle;
+    content:'\0041';
+    vertical-align: middle;
 }
 
 #msg_wrong_shop_context {
-	border: 1px solid #359ddb;
-	border-left-width: 4px;
-	border-radius: 3px;
-	margin-bottom: 17px;
-	padding: 15px;
-	padding-left: 50px;
-	background-color: #dcf4f9;
-	color: #0070b3;
-	position: relative;
+    border: 1px solid #359ddb;
+    border-left-width: 4px;
+    border-radius: 3px;
+    margin-bottom: 17px;
+    padding: 15px;
+    padding-left: 50px;
+    background-color: #dcf4f9;
+    color: #0070b3;
+    position: relative;
 }
 #msg_wrong_shop_context::before {
     position: absolute;
@@ -95,12 +95,12 @@ li#maintab-AdminRelevanzMain .icon-AdminRelevanzMain::before {
     line-height: 35px;
 }
 #msg_wrong_shop_context strong {
-	color: #005080;
-	font-weight: bolder;
+    color: #005080;
+    font-weight: bolder;
 }
 #msg_wrong_shop_context strong::before {
-	content: "\"";
+    content: "\"";
 }
 #msg_wrong_shop_context strong::after {
-	content: "\"";
+    content: "\"";
 }
