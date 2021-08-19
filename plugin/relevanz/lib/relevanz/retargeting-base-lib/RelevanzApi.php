@@ -19,7 +19,7 @@ class RelevanzApi
     const RELEVANZ_TRACKER_URL = 'https://pix.hyj.mobi/rt';
     const RELEVANZ_CONV_URL    = 'https://d.hyj.mobi/conv';
 
-    public static function makeWebRequest($url, $timeout = 5) {
+    public static function makeWebRequest($url, $timeout = 10) {
         $ch = curl_init();
         curl_setopt_array($ch, [
             CURLOPT_URL            => $url,
