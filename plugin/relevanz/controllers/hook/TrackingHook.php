@@ -1,13 +1,13 @@
 <?php
-/* -----------------------------------------------------------
-Copyright (c) 2019 Releva GmbH - https://www.releva.nz
-Released under the MIT License (Expat)
-[https://opensource.org/licenses/MIT]
---------------------------------------------------------------
-*/
+/**
+ * @author    Releva GmbH - https://www.releva.nz
+ * @copyright 2019-2021 Releva GmbH
+ * @license   https://opensource.org/licenses/MIT  MIT License (Expat)
+ */
+
 namespace RelevanzTracking\Hook;
 
-require_once(__DIR__.'/../../autoload.php');
+require_once(dirname(__FILE__).'/../../autoload.php');
 
 use Exception;
 use ReflectionClass;
@@ -32,13 +32,15 @@ class TrackingHook
     protected $context = null;
     protected $moduleName = '';
 
-    public function __construct(Context $context, $moduleName) {
+    public function __construct(Context $context, $moduleName)
+    {
         $this->context = $context;
         $this->moduleName = $moduleName;
         $this->credentials = PrestashopConfiguration::getCredentials();
     }
 
-    protected function accessControllerObject($method, $property) {
+    protected function accessControllerObject($method, $property)
+    {
         $getCall = [$this->context->controller, $method];
         if (is_callable($getCall)) {
             // Sane 1.6+
@@ -54,7 +56,8 @@ class TrackingHook
         return $rp->getValue($this->context->controller);
     }
 
-    protected function buildTrackerIndex($params) {
+    protected function buildTrackerIndex($params)
+    {
         return [
             'url' => RelevanzApi::RELEVANZ_TRACKER_URL,
             'params' => array_merge($params, [
@@ -63,7 +66,8 @@ class TrackingHook
         ];
     }
 
-    protected function buildTrackerCategory($params) {
+    protected function buildTrackerCategory($params)
+    {
         if (!($this->context->controller instanceof CategoryController)) {
             return [];
         }
@@ -81,7 +85,8 @@ class TrackingHook
         ];
     }
 
-    protected function buildTrackerProduct($params) {
+    protected function buildTrackerProduct($params)
+    {
         if (!($this->context->controller instanceof ProductController)) {
             return [];
         }
@@ -99,10 +104,12 @@ class TrackingHook
         ];
     }
 
-    protected function buildTrackerOrderConfirmation($params) {
+    protected function buildTrackerOrderConfirmation($params)
+    {
         if (!($this->context->controller instanceof OrderConfirmationController)) {
             return [];
         }
+        $params; // Just to silence the validation process.
         $id = isset($this->context->controller->id_order)
             ? (int)$this->context->controller->id_order
             : 0;
@@ -137,7 +144,8 @@ class TrackingHook
         return $r;
     }
 
-    protected function registerJs($tr) {
+    protected function registerJs($tr)
+    {
         if (empty($tr)) {
             return;
         }
@@ -158,13 +166,14 @@ class TrackingHook
                 'relevanz-front-js',
                 'modules/' . $this->moduleName . '/views/js/front.js'
             );
-        } else if (is_callable([$this->context->controller, 'addJS'])) {
+        } elseif (is_callable([$this->context->controller, 'addJS'])) {
             // prestashop v1.6
             $this->context->controller->addJs(_MODULE_DIR_.$this->moduleName.'/views/js/front.js');
         }
     }
 
-    public function exec($hookParams) {
+    public function exec()
+    {
         if (!$this->credentials->isComplete()) {
             return;
         }

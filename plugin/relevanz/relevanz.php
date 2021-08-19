@@ -1,15 +1,16 @@
 <?php
-/* -----------------------------------------------------------
-Copyright (c) 2019 Releva GmbH - https://www.releva.nz
-Released under the MIT License (Expat)
-[https://opensource.org/licenses/MIT]
---------------------------------------------------------------
-*/
+/**
+ *  @author    Releva GmbH - https://www.releva.nz
+ *  @copyright 2019-2021 Releva GmbH
+ *  @license   https://opensource.org/licenses/MIT  MIT License (Expat)
+ */
+
 if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-class Relevanz extends Module {
+class Relevanz extends Module
+{
 
     protected $mainTab = 'AdminRelevanzMain';
     protected $subTabs = [
@@ -25,7 +26,8 @@ class Relevanz extends Module {
         ],
     ];
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->name = 'relevanz';
         #$this->module_key = '0123456789abcdef0123456789abcdef';
         $this->author = 'Releva GmbH';
@@ -43,11 +45,13 @@ class Relevanz extends Module {
         $this->description = $this->l('releva.nz - Technology for personalized marketing');
     }
 
-    protected function addErrorMessage($errMsg) {
+    protected function addErrorMessage($errMsg)
+    {
          $this->_errors[] = $errMsg;
     }
 
-    protected function uninstallTabs() {
+    protected function uninstallTabs()
+    {
         $tabs = array_keys($this->subTabs);
         $tabs[] = $this->mainTab;
         $happy = true;
@@ -63,7 +67,8 @@ class Relevanz extends Module {
         return $happy;
     }
 
-    protected function installTabs() {
+    protected function installTabs()
+    {
         $languages = Language::getLanguages(false);
 
         $mainTabId = (int)Tab::getIdFromClassName($this->mainTab);
@@ -71,7 +76,6 @@ class Relevanz extends Module {
 
         if ($mainTabId > 0) {
             $mainTab = new Tab($mainTabId);
-
         } else {
             $mainTab = new Tab();
             $mainTab->class_name = $this->mainTab;
@@ -107,7 +111,10 @@ class Relevanz extends Module {
             }
 
             if (!$subTab->add()) {
-                $this->addErrorMessage(sprintf($this->l('Unable to register the releva.nz %s sub-menu.'), $fallbackTranslation));
+                $this->addErrorMessage(sprintf(
+                    $this->l('Unable to register the releva.nz %s sub-menu.'),
+                    $fallbackTranslation
+                ));
                 return false;
             }
         }
@@ -120,36 +127,40 @@ class Relevanz extends Module {
         return true;
     }
 
-    public function install() {
-    	if (Shop::isFeatureActive()) {
-	        Shop::setContext(Shop::CONTEXT_ALL);
-	    }
+    public function install()
+    {
+        if (Shop::isFeatureActive()) {
+            Shop::setContext(Shop::CONTEXT_ALL);
+        }
         return parent::install()
             && $this->uninstallTabs() && $this->installTabs()
             && $this->registerHook('displayBackOfficeHeader')
             && $this->registerHook('header');
     }
 
-    public function uninstall() {
+    public function uninstall()
+    {
         // Hooks will be uninstalled by prestashop automatically.
         return parent::uninstall() && $this->uninstallTabs();
     }
 
-    public function hookDisplayBackOfficeHeader() {
+    public function hookDisplayBackOfficeHeader()
+    {
         // Use addCss(), registerStylesheet() is only for front controllers.
         $this->context->controller->addCss(
             $this->_path.'views/css/relevanz.css'
         );
     }
 
-    public function getContent() {
+    public function getContent()
+    {
         return Tools::redirectAdmin($this->context->link->getAdminLink('AdminRelevanzConf'));
     }
 
-    public function hookHeader($params) {
-        require_once(__DIR__.'/controllers/hook/TrackingHook.php');
+    public function hookHeader($params)
+    {
+        require_once(dirname(__FILE__).'/controllers/hook/TrackingHook.php');
         $trackingHookHandler = new RelevanzTracking\Hook\TrackingHook($this->context, $this->name);
         $trackingHookHandler->exec($params);
     }
-
 }

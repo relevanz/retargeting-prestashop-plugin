@@ -1,11 +1,11 @@
 <?php
-/* -----------------------------------------------------------
-Copyright (c) 2019 Releva GmbH - https://www.releva.nz
-Released under the MIT License (Expat)
-[https://opensource.org/licenses/MIT]
---------------------------------------------------------------
-*/
-require_once(__DIR__.'/../../autoload.php');
+/**
+ * @author    Releva GmbH - https://www.releva.nz
+ * @copyright 2019-2021 Releva GmbH
+ * @license   https://opensource.org/licenses/MIT  MIT License (Expat)
+ */
+
+require_once(dirname(__FILE__).'/../../autoload.php');
 
 use Releva\Retargeting\Base\RelevanzApi;
 use Releva\Retargeting\Base\Credentials;
@@ -25,7 +25,8 @@ class AdminRelevanzStatsController extends AdminBaseController
             #.(Shop::isFeatureActive() ? ' ['.$this->context->shop->name.']' : '');
     }
 
-    public function setMedia($isNewTheme = false) {
+    public function setMedia($isNewTheme = false)
+    {
         if (!$isNewTheme) {
             $this->addJs(_MODULE_DIR_.$this->module->name.'/views/js/old-theme-helper.js');
         }
@@ -34,7 +35,8 @@ class AdminRelevanzStatsController extends AdminBaseController
         parent::setMedia($isNewTheme);
     }
 
-    public function renderView() {
+    public function renderView()
+    {
         $credentials = PrestashopConfiguration::getCredentials();
 
         if (!$credentials->isComplete()) {
@@ -45,5 +47,4 @@ class AdminRelevanzStatsController extends AdminBaseController
         ]);
         return $this->createTemplate('statistics.tpl')->fetch();
     }
-
 }

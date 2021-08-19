@@ -1,12 +1,12 @@
 <?php
-/* -----------------------------------------------------------
-Copyright (c) 2019 Releva GmbH - https://www.releva.nz
-Released under the MIT License (Expat)
-[https://opensource.org/licenses/MIT]
---------------------------------------------------------------
-*/
-require_once(__DIR__.'/lib/relevanz/retargeting-base-lib/ClassLoader.php');
+/**
+ * @author    Releva GmbH - https://www.releva.nz
+ * @copyright 2019-2021 Releva GmbH
+ * @license   https://opensource.org/licenses/MIT  MIT License (Expat)
+ */
+
+require_once(dirname(__FILE__).'/lib/relevanz/retargeting-base-lib/ClassLoader.php');
 Releva\Retargeting\Base\ClassLoader::init()->addPsr4Map([
-    'Releva\\Retargeting\\Base\\' => __DIR__.'/lib/relevanz/retargeting-base-lib/',
-    'Releva\\Retargeting\\Prestashop\\' => __DIR__.'/lib/prestashop/',
+    'Releva\\Retargeting\\Base\\' => dirname(__FILE__).'/lib/relevanz/retargeting-base-lib/',
+    'Releva\\Retargeting\\Prestashop\\' => dirname(__FILE__).'/lib/prestashop/',
 ]);

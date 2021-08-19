@@ -1,10 +1,10 @@
 <?php
-/* -----------------------------------------------------------
-Copyright (c) 2019 Releva GmbH - https://www.releva.nz
-Released under the MIT License (Expat)
-[https://opensource.org/licenses/MIT]
---------------------------------------------------------------
-*/
+/**
+ * @author    Releva GmbH - https://www.releva.nz
+ * @copyright 2019-2021 Releva GmbH
+ * @license   https://opensource.org/licenses/MIT  MIT License (Expat)
+ */
+
 namespace Releva\Retargeting\Prestashop;
 
 use Exception;
@@ -17,7 +17,8 @@ use Releva\Retargeting\Prestashop\PrestashopConfiguration;
 
 abstract class FrontBaseController extends ModuleFrontController
 {
-    protected function verifyRequest() {
+    protected function verifyRequest()
+    {
         $credentials = PrestashopConfiguration::getCredentials();
         if (!$credentials->isComplete()) {
             return new HttpResponse('releva.nz module is not configured', [
@@ -44,7 +45,8 @@ abstract class FrontBaseController extends ModuleFrontController
      */
     abstract protected function action();
 
-    public function display() {
+    public function display()
+    {
         $herp = $this->verifyRequest();
         if ($herp !== null) {
             $herp->out();
@@ -63,5 +65,4 @@ abstract class FrontBaseController extends ModuleFrontController
 
         $derp->out();
     }
-
 }

@@ -1,3 +1,9 @@
+/**
+ * @author    Releva GmbH - https://www.releva.nz
+ * @copyright 2019-2021 Releva GmbH
+ * @license   https://opensource.org/licenses/MIT  MIT License (Expat)
+ */
+
 document.addEventListener("DOMContentLoaded", function(event) {
     var d = document, jid = 'relevanz-js', js = null;
 

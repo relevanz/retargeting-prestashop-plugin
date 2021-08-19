@@ -1,10 +1,10 @@
 <?php
-/* -----------------------------------------------------------
-Copyright (c) 2019 Releva GmbH - https://www.releva.nz
-Released under the MIT License (Expat)
-[https://opensource.org/licenses/MIT]
---------------------------------------------------------------
-*/
+/**
+ * @author    Releva GmbH - https://www.releva.nz
+ * @copyright 2019-2021 Releva GmbH
+ * @license   https://opensource.org/licenses/MIT  MIT License (Expat)
+ */
+
 namespace Releva\Retargeting\Prestashop;
 
 use Context;
@@ -20,7 +20,8 @@ class PrestashopConfiguration implements ConfigurationInterface
     const CONF_APIKEY = 'RELEVANZ_APIKEY';
     const CONF_USERID = 'RELEVANZ_USERID';
 
-    public static function getCredentials() {
+    public static function getCredentials()
+    {
         $shopId = Context::getContext()->shop->id;
         $shopGroupId = Context::getContext()->shop->id_shop_group;
         return new Credentials(
@@ -29,18 +30,21 @@ class PrestashopConfiguration implements ConfigurationInterface
         );
     }
 
-    public static function updateCredentials(Credentials $credentials) {
+    public static function updateCredentials(Credentials $credentials)
+    {
         $shopId = Context::getContext()->shop->id;
         $shopGroupId = Context::getContext()->shop->id_shop_group;
         Configuration::updateValue(self::CONF_APIKEY, $credentials->getApiKey(), false, $shopGroupId, $shopId);
         Configuration::updateValue(self::CONF_USERID, $credentials->getUserId(), false, $shopGroupId, $shopId);
     }
 
-    public static function getPluginVersion() {
+    public static function getPluginVersion()
+    {
         return self::PLUGIN_VERSION;
     }
 
-    public static function conflictsMultistore() {
+    public static function conflictsMultistore()
+    {
         if (!Shop::isFeatureActive()) {
             return false;
         }
@@ -54,5 +58,4 @@ class PrestashopConfiguration implements ConfigurationInterface
         }
         return false;
     }
-
 }

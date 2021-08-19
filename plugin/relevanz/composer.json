@@ -3,7 +3,8 @@
     "description": "releva.nz - Technology for personalized marketing",
     "type": "prestashop-module",
     "config": {
-        "vendor-dir": "lib"
+        "vendor-dir": "lib",
+        "prepend-autoloader": false
     },
     "require": {
         "relevanz/retargeting-base-lib": "dev-master"
@@ -16,6 +17,7 @@
     ],
     "autoload": {
         "psr-4": {
+            "Releva\\Retargeting\\Base\\": "lib/relevanz/retargeting-base-lib/",
             "Releva\\Retargeting\\Prestashop\\": "lib/prestashop/"
         }
     },

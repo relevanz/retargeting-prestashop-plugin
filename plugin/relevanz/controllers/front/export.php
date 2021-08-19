@@ -1,11 +1,11 @@
 <?php
-/* -----------------------------------------------------------
-Copyright (c) 2019 Releva GmbH - https://www.releva.nz
-Released under the MIT License (Expat)
-[https://opensource.org/licenses/MIT]
---------------------------------------------------------------
-*/
-require_once(__DIR__.'/../../autoload.php');
+/**
+ * @author    Releva GmbH - https://www.releva.nz
+ * @copyright 2019-2021 Releva GmbH
+ * @license   https://opensource.org/licenses/MIT  MIT License (Expat)
+ */
+
+require_once(dirname(__FILE__).'/../../autoload.php');
 
 use Releva\Retargeting\Base\Export\Item\ProductExportItem;
 use Releva\Retargeting\Base\Export\ProductCsvExporter;
@@ -19,7 +19,8 @@ class RelevanzExportModuleFrontController extends FrontBaseController
 {
     const ITEMS_PER_PAGE = 1500;
 
-    protected function action() {
+    protected function action()
+    {
         $shopId = (int)$this->context->shop->id;
         $langId = (int)$this->context->language->id;
 
@@ -36,14 +37,12 @@ class RelevanzExportModuleFrontController extends FrontBaseController
 
         $exporter = null;
         switch (Tools::getValue('format')) {
-            case 'json': {
+            case 'json':
                 $exporter = new ProductJsonExporter();
                 break;
-            }
-            default: {
+            default:
                 $exporter = new ProductCsvExporter();
                 break;
-            }
         }
 
         $sql = '
@@ -66,7 +65,7 @@ class RelevanzExportModuleFrontController extends FrontBaseController
         }
 
         foreach ($products as $p) {
-            $product =  new Product($p['id'], false, $langId , $shopId, $this->context);
+            $product = new Product($p['id'], false, $langId, $shopId, $this->context);
 
             $coverImageId = (int)$product->getCoverWs();
             $productImage = null;
@@ -102,7 +101,8 @@ class RelevanzExportModuleFrontController extends FrontBaseController
         return new HttpResponse($exporter->getContents(), $headers);
     }
 
-    public static function discover() {
+    public static function discover()
+    {
         return [
             'url' => PrestashopShopInfo::getUrlProductExport(),
             'parameters' => [
@@ -121,5 +121,4 @@ class RelevanzExportModuleFrontController extends FrontBaseController
             ]
         ];
     }
-
 }

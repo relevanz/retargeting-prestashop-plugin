@@ -1,11 +1,11 @@
 <?php
-/* -----------------------------------------------------------
-Copyright (c) 2019 Releva GmbH - https://www.releva.nz
-Released under the MIT License (Expat)
-[https://opensource.org/licenses/MIT]
---------------------------------------------------------------
-*/
-require_once(__DIR__.'/../../autoload.php');
+/**
+ * @author    Releva GmbH - https://www.releva.nz
+ * @copyright 2019-2021 Releva GmbH
+ * @license   https://opensource.org/licenses/MIT  MIT License (Expat)
+ */
+
+require_once(dirname(__FILE__).'/../../autoload.php');
 
 use Releva\Retargeting\Base\RelevanzApi;
 use Releva\Retargeting\Base\Credentials;
@@ -17,7 +17,8 @@ use Releva\Retargeting\Prestashop\AdminBaseController;
 
 class AdminRelevanzConfController extends AdminBaseController
 {
-    public function __construct() {
+    public function __construct()
+    {
 
         $this->show_toolbar = false;
         $this->bootstrap = true;
@@ -35,7 +36,8 @@ class AdminRelevanzConfController extends AdminBaseController
         }
     }
 
-    public function setMedia($isNewTheme = false) {
+    public function setMedia($isNewTheme = false)
+    {
         if (!$isNewTheme) {
             $this->addJs(_MODULE_DIR_.$this->module->name.'/views/js/old-theme-helper.js');
         }
@@ -44,7 +46,8 @@ class AdminRelevanzConfController extends AdminBaseController
         parent::setMedia($isNewTheme);
     }
 
-    public function saveAction() {
+    public function saveAction()
+    {
         $post = Tools::getValue('relevanz');
         if (!isset($post['conf']) || !is_array($post['conf'])) {
             return;
@@ -56,9 +59,7 @@ class AdminRelevanzConfController extends AdminBaseController
                 ['callback-url' => PrestashopShopInfo::getUrlCallback()]
             );
             PrestashopConfiguration::updateCredentials($credentials);
-
             $this->confirmations[] = $this->l('Configuration saved.');
-
         } catch (RelevanzException $re) {
             $sarg = [$this->l('msg_'.$re->getCode())];
             $sarg = array_merge($sarg, $re->getSprintfArgs());
@@ -66,12 +67,14 @@ class AdminRelevanzConfController extends AdminBaseController
         }
     }
 
-    public function renderView() {
+    public function renderView()
+    {
         $this->saveAction();
         $credentials = PrestashopConfiguration::getCredentials();
         $exportUrl = str_replace(':auth', $credentials->getAuthHash(), PrestashopShopInfo::getUrlProductExport());
 
         if (PrestashopConfiguration::conflictsMultistore()) {
+            // Presta: Fix your $this->l() parser and i'll fix the length of this line.
             $this->errors[] = $this->l('One or more API keys are used by different multistore instances. This can lead to unwanted behavior. Please make sure that each shop uses its own API key. If you need more API keys, please contact the releva.nz support.');
         }
 
@@ -81,5 +84,4 @@ class AdminRelevanzConfController extends AdminBaseController
         ]);
         return $this->createTemplate('configuration.tpl')->fetch();
     }
-
 }

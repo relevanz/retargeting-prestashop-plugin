@@ -1,10 +1,10 @@
 <?php
-/* -----------------------------------------------------------
-Copyright (c) 2019 Releva GmbH - https://www.releva.nz
-Released under the MIT License (Expat)
-[https://opensource.org/licenses/MIT]
---------------------------------------------------------------
-*/
+/**
+ * @author    Releva GmbH - https://www.releva.nz
+ * @copyright 2019-2021 Releva GmbH
+ * @license   https://opensource.org/licenses/MIT  MIT License (Expat)
+ */
+
 namespace Releva\Retargeting\Prestashop;
 
 use Translate;
@@ -15,7 +15,8 @@ class Helper
      * Helper method for making translations possible in twig templates using the old translation
      * system because the symfony one is not available for 3rd party modules yet.
      */
-    public function l($string, $specific = false, $raw = false) {
+    public function l($string, $specific = false, $raw = false)
+    {
         
         $s = Translate::getModuleTranslation('relevanz', $string, ($specific) ? $specific : 'relevanz');
         if ($raw) {
@@ -23,5 +24,4 @@ class Helper
         }
         return $s;
     }
-
 }

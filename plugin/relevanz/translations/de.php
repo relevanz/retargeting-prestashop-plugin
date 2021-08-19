@@ -16,8 +16,9 @@ $_MODULE['<{relevanz}prestashop>adminrelevanzconfcontroller_558b49eb972c3c62a1a4
 $_MODULE['<{relevanz}prestashop>adminrelevanzconfcontroller_7a6c14e10f0670f5215b49b31c6d0443'] = 'Einer oder mehrere API-Keys werden von verschiedenen Multistore-Instanzen genutzt. Dies kann zu ungewolltem Verhalten führen. Bitte stellen Sie sicher, dass jeder Shop einen eigenen API-Key verwendet. Wenn Sie weitere API-Keys benötigen, kontaktieren Sie bitte den releva.nz Support.';
 $_MODULE['<{relevanz}prestashop>adminrelevanzstatscontroller_c33e404a441c6ba9648f88af3c68a1ca'] = 'Statistik';
 $_MODULE['<{relevanz}prestashop>adminbasecontroller_3331e78f651d3451c222f533a9e9abb6'] = 'Das releva.nz Plugin kann nur für spezifische Shops konfiguriert werden. Bitte wechseln Sie den Kontext auf einen spezifischen Shop. Aktuell wird der Shop [%s] verwendet.';
-$_MODULE['<{relevanz}prestashop>configuration_1949b60c8576d9ab0d3db0c57b743d96'] = 'Wenn sie bereits registriert sind und unseren Key erhalten haben, geben Sie diesen bitte in diesem Feld ein.[br][plink]Noch nicht registriert? Jetzt nachholen![/plink]';
 $_MODULE['<{relevanz}prestashop>configuration_2b3433dd650bb461a55cbc0dd52d2f7c'] = 'Ihr releva.nz API Key';
+$_MODULE['<{relevanz}prestashop>configuration_6c06a335e72dfb88d79c5d123f761d1d'] = 'Wenn sie bereits registriert sind und unseren Key erhalten haben, geben Sie diesen bitte in diesem Feld ein.';
+$_MODULE['<{relevanz}prestashop>configuration_005fb40c085e5a4ad3d0a6e183dafbcf'] = 'Noch nicht registriert? Jetzt nachholen!';
 $_MODULE['<{relevanz}prestashop>configuration_98bbe02b1bc66f5988cd9e997ea80e3b'] = 'Ihre Kunden ID';
 $_MODULE['<{relevanz}prestashop>configuration_ae2bddad7ff3e00b6cc26534d1e796c0'] = 'Bitte übermitteln Sie diese URL an den releva.nz Kundenservice.';
 $_MODULE['<{relevanz}prestashop>configuration_37954eab7f99faa02e5a92460843804f'] = 'Export-URL';
