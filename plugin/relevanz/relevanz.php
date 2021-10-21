@@ -29,7 +29,7 @@ class Relevanz extends Module
     public function __construct()
     {
         $this->name = 'relevanz';
-        #$this->module_key = '0123456789abcdef0123456789abcdef';
+        $this->module_key = 'e58b458525f7c6a1732148d101f9997d';
         $this->author = 'Releva GmbH';
         $this->tab = 'advertising_marketing';
         // The version compliancy check in prestashop 1.5 is kinda broken.
