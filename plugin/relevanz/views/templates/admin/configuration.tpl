@@ -42,7 +42,7 @@
         </div>
 
         <div class="panel-footer">
-            <button type="submit" class="btn btn-default pull-right" name="submitOptionswebservice_account"><i class="process-icon-save"></i> Speichern</button>
+            <button type="submit" class="btn btn-default pull-right" name="submitOptionswebservice_account"><i class="process-icon-save"></i> {l s='Save' mod='relevanz'}</button>
         </div>
     </div>
 </form>

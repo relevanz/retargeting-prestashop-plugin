@@ -39,7 +39,7 @@
 /* Old style nav */
 #subtab-AdminRelevanzStats .link:before {
     font-family: 'relevanz';
-    font-size: 1.2rem;
+    font-size: 1.0rem;
     content:'\0042';
     color: #fff;
 }

@@ -20,5 +20,6 @@ $_MODULE['<{relevanz}prestashop>configuration_2b3433dd650bb461a55cbc0dd52d2f7c']
 $_MODULE['<{relevanz}prestashop>configuration_6c06a335e72dfb88d79c5d123f761d1d'] = 'Wenn sie bereits registriert sind und unseren Key erhalten haben, geben Sie diesen bitte in diesem Feld ein.';
 $_MODULE['<{relevanz}prestashop>configuration_005fb40c085e5a4ad3d0a6e183dafbcf'] = 'Noch nicht registriert? Jetzt nachholen!';
 $_MODULE['<{relevanz}prestashop>configuration_98bbe02b1bc66f5988cd9e997ea80e3b'] = 'Ihre Kunden ID';
-$_MODULE['<{relevanz}prestashop>configuration_ae2bddad7ff3e00b6cc26534d1e796c0'] = 'Bitte übermitteln Sie diese URL an den releva.nz Kundenservice.';
 $_MODULE['<{relevanz}prestashop>configuration_37954eab7f99faa02e5a92460843804f'] = 'Export-URL';
+$_MODULE['<{relevanz}prestashop>configuration_ae2bddad7ff3e00b6cc26534d1e796c0'] = 'Bitte übermitteln Sie diese URL an den releva.nz Kundenservice.';
+$_MODULE['<{relevanz}prestashop>configuration_c9cc8cce247e49bae79f15173ce97354'] = 'Speichern';
