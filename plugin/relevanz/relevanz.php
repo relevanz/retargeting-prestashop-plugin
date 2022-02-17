@@ -147,8 +147,10 @@ class Relevanz extends Module
     public function hookDisplayBackOfficeHeader()
     {
         // Use addCss(), registerStylesheet() is only for front controllers.
+        // This adds a custom icon to the admin menu for the releva.nz plugin.
+        // Therefore this hook is executed for every backoffice page.
         $this->context->controller->addCss(
-            $this->_path.'views/css/relevanz.css'
+            $this->_path.'views/css/relevanz-menu-icon.css'
         );
     }
 
