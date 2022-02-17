@@ -1,6 +1,6 @@
 {*
  * @author    Releva GmbH - https://www.releva.nz
- * @copyright 2019-2021 Releva GmbH
+ * @copyright 2019-2022 Releva GmbH
  * @license   https://opensource.org/licenses/MIT  MIT License (Expat)
  *}
 <article id="relevanz-stats" class="{if (!empty($msg_wrong_shop_context))}has_msg_wrong_shop_context{/if}">

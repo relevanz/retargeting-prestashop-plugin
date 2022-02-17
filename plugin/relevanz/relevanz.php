@@ -1,7 +1,7 @@
 <?php
 /**
  *  @author    Releva GmbH - https://www.releva.nz
- *  @copyright 2019-2021 Releva GmbH
+ *  @copyright 2019-2022 Releva GmbH
  *  @license   https://opensource.org/licenses/MIT  MIT License (Expat)
  */
 
