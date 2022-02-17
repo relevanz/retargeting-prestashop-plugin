@@ -61,9 +61,15 @@ class AdminRelevanzConfController extends AdminBaseController
             PrestashopConfiguration::updateCredentials($credentials);
             $this->confirmations[] = $this->l('Configuration saved.');
         } catch (RelevanzException $re) {
-            $sarg = [$this->l('msg_'.$re->getCode())];
-            $sarg = array_merge($sarg, $re->getSprintfArgs());
-            $this->errors[] = call_user_func_array('sprintf', $sarg).' (E'.$re->getCode().')';
+            $msgKey = 'msg_'.$re->getCode();
+            $msg = $this->l($msgKey);
+            if ($msg === $msgKey) {
+                $msg = $re->getMessage();
+            }
+            $this->errors[] = call_user_func_array(
+                'sprintf',
+                array_merge([$msg.' (E%s)'], $re->getSprintfArgs(), [$re->getCode()])
+            );
         }
     }
 
