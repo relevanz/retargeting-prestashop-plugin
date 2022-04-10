@@ -4,4 +4,4 @@
  * @license   https://opensource.org/licenses/MIT  MIT License (Expat)
  *}
 {* File required for Prestashop 1.5.x *}
-{$content|default:''}
+{if (!empty($content))}{$content}{/if}
