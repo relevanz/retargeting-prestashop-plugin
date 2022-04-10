@@ -80,7 +80,7 @@ class AdminRelevanzConfController extends AdminBaseController
         $exportUrl = str_replace(':auth', $credentials->getAuthHash(), PrestashopShopInfo::getUrlProductExport());
 
         if (PrestashopConfiguration::conflictsMultistore()) {
-            // Presta: Fix your $this->l() parser and i'll fix the length of this line.
+            // This line has to be this long for the parser of the prestashop translation tool.
             $this->errors[] = $this->l('One or more API keys are used by different multistore instances. This can lead to unwanted behavior. Please make sure that each shop uses its own API key. If you need more API keys, please contact the releva.nz support.');
         }
 

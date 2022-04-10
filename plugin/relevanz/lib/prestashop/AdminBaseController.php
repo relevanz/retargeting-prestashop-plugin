@@ -26,7 +26,7 @@ class AdminBaseController extends ModuleAdminController
         if (Shop::isFeatureActive() && ($this->context->shop->getContextType() !== Shop::CONTEXT_SHOP)) {
             $this->context->smarty->assign([
                 'msg_wrong_shop_context' => sprintf(
-                    // A very long line for the primitive parser of the prestashop translation tool.
+                    // This line has to be this long for the parser of the prestashop translation tool.
                     $this->l('The releva.nz plugin can only be configured for specific shops. Please change the context to a specific shop. Currently the shop [%s] is used.', __CLASS__),
                     $this->context->shop->name
                 )
@@ -44,7 +44,8 @@ class AdminBaseController extends ModuleAdminController
     }
 
     /**
-     * The old translation system is stoopid (and deprecated for a reason, multiple reasons even).
+     * The old (deprecated) translation system has some issues.
+     * This method tries to fix one of them for this module.
      */
     protected function l($string, $class = null, $addslashes = false, $htmlentities = true)
     {
