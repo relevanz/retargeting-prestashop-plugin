@@ -14,7 +14,7 @@ use Releva\Retargeting\Base\Credentials;
 
 class RelevanzApi
 {
-    const RELEVANZ_STATS_FRAME = 'https://frontend.releva.nz/token?token=';
+    const RELEVANZ_STATS_FRAME = 'https://frontend.releva.nz/?token=';
     const RELEVANZ_KEY_URL     = 'https://backend.releva.nz/v1/campaigns/get?apikey=';
     const RELEVANZ_TRACKER_URL = 'https://pix.hyj.mobi/rt';
     const RELEVANZ_CONV_URL    = 'https://d.hyj.mobi/conv';
